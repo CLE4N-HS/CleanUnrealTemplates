@@ -8,16 +8,12 @@ UCLASS(%UCLASS_SPECIFIER_LIST%)
 class %CLASS_MODULE_API_MACRO%%PREFIXED_CLASS_NAME% : public %PREFIXED_BASE_CLASS_NAME%
 {
 	GENERATED_BODY()
-	%PREFIXED_CLASS_NAME%();
 
 protected:
+	%PREFIXED_CLASS_NAME%();
 	virtual void BeginPlay() override;
-
-public:	
 	virtual void Tick(float DeltaTime) override;
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	%CLASS_FUNCTION_DECLARATIONS%
 	%CLASS_PROPERTIES%
 };

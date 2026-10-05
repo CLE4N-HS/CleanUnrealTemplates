@@ -36,6 +36,7 @@ try {
         "ActorComponentClass"
         "CharacterClass"
         "EmptyClass"
+        "InterfaceClass"
         "PawnClass"
     )
 
@@ -79,12 +80,24 @@ try {
     }
 
     # -----------------------------------------------------------------
+    # Comment lines that must survive Remove-Comments below, because
+    # they carry useful information rather than boilerplate. Add more
+    # exact lines here (matched after trimming) to protect them too.
+    # -----------------------------------------------------------------
+    $PreservedCommentLines = @(
+        "// This class does not need to be modified."
+        "// Add default functionality here for any I%UNPREFIXED_CLASS_NAME% functions that are not pure virtual."
+    )
+
+    # -----------------------------------------------------------------
     # RULE: remove comments
     # Removes full-line "//" comments, and multi-line "/* ... */" style
     # block comments (including the common "/**" doxygen-style form
-    # some templates use). Does not touch code that merely contains //
-    # or /* inside a string - these template files never do that, so a
-    # simple line-based check is safe here.
+    # some templates use), except for the lines listed in
+    # $PreservedCommentLines above, which are kept as-is. Does not
+    # touch code that merely contains // or /* inside a string - these
+    # template files never do that, so a simple line-based check is
+    # safe here.
     # -----------------------------------------------------------------
     function Remove-Comments {
         param([string[]]$Lines)
@@ -99,6 +112,11 @@ try {
                 if ($trimmed -match "\*/\s*$") {
                     $insideBlockComment = $false
                 }
+                continue
+            }
+
+            if ($PreservedCommentLines -contains $trimmed) {
+                $result.Add($line)
                 continue
             }
 
@@ -196,33 +214,50 @@ try {
         $endIndex = $Lines.Count
         for ($i = $startIndex; $i -lt $Lines.Count; $i++) {
             $trimmed = $Lines[$i].Trim()
-            if ($trimmed.StartsWith("%") -or $trimmed -eq "};") {
+            # Only a line that is ENTIRELY a bare placeholder (like
+            # "%CLASS_FUNCTION_DECLARATIONS%") marks the end of the
+            # region - a declaration that merely contains a placeholder,
+            # like "%PREFIXED_CLASS_NAME%();", must not match here.
+            if ($trimmed -match "^%[A-Za-z0-9_]+%$" -or $trimmed -eq "};") {
                 $endIndex = $i
                 break
             }
         }
 
-        $region = $Lines[$startIndex..($endIndex - 1)]
+        # PowerShell's ".." range operator counts DOWNWARD when the left
+        # number is greater than the right one, instead of yielding an
+        # empty range like most languages do. When the region is empty
+        # (endIndex equals startIndex, e.g. an empty UINTERFACE shell
+        # where GENERATED_BODY() is immediately followed by "};"), that
+        # quirk would otherwise pull in unrelated lines - so it must be
+        # special-cased here.
+        if ($endIndex -gt $startIndex) {
+            $region = $Lines[$startIndex..($endIndex - 1)]
+        }
+        else {
+            $region = @()
+        }
 
+        # Blank here means Trim() -eq "" (covers both fully empty lines
+        # and Unreal's whitespace/tab-only spacer line) - both get
+        # dropped, since a single clean blank line is always inserted
+        # fresh below instead.
         $kept = New-Object System.Collections.Generic.List[string]
         foreach ($line in $region) {
-            if ($line.Length -eq 0) { continue }
+            if ($line.Trim() -eq "") { continue }
             if ($line.Trim() -in @("public:", "protected:", "private:")) { continue }
             $kept.Add($line)
         }
 
         $rebuilt = New-Object System.Collections.Generic.List[string]
 
-        if ($kept.Count -gt 0 -and $kept[0].Trim() -eq "") {
-            # preserve Unreal's own whitespace-only spacer line, then
-            # insert our single protected label after it
-            $rebuilt.Add($kept[0])
-            $rebuilt.Add("protected:")
-            for ($i = 1; $i -lt $kept.Count; $i++) {
-                $rebuilt.Add($kept[$i])
-            }
-        }
-        elseif ($kept.Count -gt 0) {
+        if ($kept.Count -gt 0) {
+            # One blank line, then a single protected: label, then every
+            # real declaration with no blank lines between them. If the
+            # region had no real declarations at all (an empty
+            # UINTERFACE shell, for example), nothing is inserted here -
+            # no blank line and no protected: label.
+            $rebuilt.Add("")
             $rebuilt.Add("protected:")
             foreach ($line in $kept) {
                 $rebuilt.Add($line)

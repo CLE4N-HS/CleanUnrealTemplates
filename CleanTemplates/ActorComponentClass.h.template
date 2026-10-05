@@ -8,14 +8,11 @@ UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class %CLASS_MODULE_API_MACRO%%PREFIXED_CLASS_NAME% : public %PREFIXED_BASE_CLASS_NAME%
 {
 	GENERATED_BODY()
-	%PREFIXED_CLASS_NAME%();
 
 protected:
+	%PREFIXED_CLASS_NAME%();
 	virtual void BeginPlay() override;
-
-public:	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
 	%CLASS_FUNCTION_DECLARATIONS%	
 	%CLASS_PROPERTIES%
 };
