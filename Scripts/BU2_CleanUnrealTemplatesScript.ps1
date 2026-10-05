@@ -40,10 +40,9 @@ try {
         Write-Host "Selected folder:"
         Write-Host "  $selectedPath"
 
-        # CleanTemplates is relative to the script location, NOT the selected directory.
-        $cleanTemplatesPath = [System.IO.Path]::GetFullPath(
-            (Join-Path -Path $PSScriptRoot -ChildPath "..\CleanTemplates")
-        )
+        # ../CleanTemplates relative to the selected directory
+        $parentPath = Split-Path -Path $selectedPath -Parent
+        $cleanTemplatesPath = Join-Path -Path $parentPath -ChildPath "CleanTemplates"
 
         if (-not (Test-Path -Path $cleanTemplatesPath -PathType Container)) {
             throw "CleanTemplates folder was not found: $cleanTemplatesPath"

@@ -36,6 +36,7 @@ try {
         "ActorComponentClass"
         "CharacterClass"
         "EmptyClass"
+        "InterfaceClass"
         "PawnClass"
     )
 

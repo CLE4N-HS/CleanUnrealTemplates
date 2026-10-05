@@ -1,12 +1,7 @@
-%COPYRIGHT_LINE%
-
-#pragma once
+﻿#pragma once
 
 #include "CoreMinimal.h"
 
-/**
- * %CURSORFOCUSLOCATION%
- */
 class %CLASS_MODULE_API_MACRO%%UNPREFIXED_CLASS_NAME%
 {
 public:
