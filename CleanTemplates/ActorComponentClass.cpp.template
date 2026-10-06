@@ -3,7 +3,6 @@
 
 %PREFIXED_CLASS_NAME%::%PREFIXED_CLASS_NAME%()
 {
-	PrimaryComponentTick.bCanEverTick = true;
 }
 
 void %PREFIXED_CLASS_NAME%::BeginPlay()

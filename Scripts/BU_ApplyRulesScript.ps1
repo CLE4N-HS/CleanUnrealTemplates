@@ -38,7 +38,6 @@ try {
         "EmptyClass"
         "InterfaceClass"
         "PawnClass"
-        "UObjectClass"
     )
 
     # -----------------------------------------------------------------
@@ -157,15 +156,6 @@ try {
         param([string[]]$Lines)
 
         return $Lines | Where-Object { $_.Trim() -ne "PrimaryActorTick.bCanEverTick = true;" }
-    }
-
-    # -----------------------------------------------------------------
-    # RULE: remove the PrimaryComponentTick.bCanEverTick = true; line
-    # -----------------------------------------------------------------
-    function Remove-PrimaryComponentTickLine {
-        param([string[]]$Lines)
-
-        return $Lines | Where-Object { $_.Trim() -ne "PrimaryComponentTick.bCanEverTick = true;" }
     }
 
     # -----------------------------------------------------------------
@@ -320,7 +310,6 @@ try {
         $Lines = Remove-Comments $Lines
         $Lines = Remove-CursorFocusLocationLine $Lines
         $Lines = Remove-PrimaryActorTickLine $Lines
-        $Lines = Remove-PrimaryComponentTickLine $Lines
         $Lines = Remove-BlankLinesBeforeClosingBrace $Lines
         $Lines = Merge-ProtectedSection $Lines
         $Lines = Collapse-BlankLines $Lines
