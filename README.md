@@ -35,17 +35,17 @@ This program replaces the default .template files installed with those located i
 
 ## Versions
 
-- CleanUneralTemplates release version : **1.0**
-- Current supported Unreal version : **Unreal 5.8**
-- Current edited classes :
-  - Actor
-  - ActorComponent
-  - Character
-  - Empty
-  - Interface
-  - Pawn
-  - UObject
+- **CleanUneralTemplates** release version: **1.0**
+- Current supported Unreal version: **Unreal 5.8**
+- Current edited classes:
+  - **Actor**
+  - **ActorComponent**
+  - **Character**
+  - **Empty**
+  - **Interface**
+  - **Pawn**
+  - **UObject**
 
 ## Usage
 
-Simply run the **CleanUnrealTemplates.bat** program and select the Unreal **Templates** folder installed on your PC. You will be given the option to copy the existing .template files into a Backup folder before overwriting them.
+Simply run the **CleanUnrealTemplates.bat** program and select the Unreal **Templates** folder installed on your PC. You will be given the option to copy the existing .template files into a **Backup** folder before overwriting them.
