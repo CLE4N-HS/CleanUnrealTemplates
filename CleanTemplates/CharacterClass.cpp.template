@@ -1,0 +1,23 @@
+﻿%MY_HEADER_INCLUDE_DIRECTIVE%
+%ADDITIONAL_INCLUDE_DIRECTIVES%
+
+%PREFIXED_CLASS_NAME%::%PREFIXED_CLASS_NAME%()
+{
+}
+
+void %PREFIXED_CLASS_NAME%::BeginPlay()
+{
+	Super::BeginPlay();
+}
+
+void %PREFIXED_CLASS_NAME%::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+}
+
+void %PREFIXED_CLASS_NAME%::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+}
+
+%ADDITIONAL_MEMBER_DEFINITIONS%

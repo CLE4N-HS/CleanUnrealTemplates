@@ -1,0 +1,18 @@
+﻿#pragma once
+
+#include "CoreMinimal.h"
+%BASE_CLASS_INCLUDE_DIRECTIVE%
+#include "%UNPREFIXED_CLASS_NAME%.generated.h"
+
+UCLASS(%UCLASS_SPECIFIER_LIST%)
+class %CLASS_MODULE_API_MACRO%%PREFIXED_CLASS_NAME% : public %PREFIXED_BASE_CLASS_NAME%
+{
+	GENERATED_BODY()
+
+protected:
+	%PREFIXED_CLASS_NAME%();
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+	%CLASS_FUNCTION_DECLARATIONS%
+	%CLASS_PROPERTIES%
+};

@@ -1,0 +1,10 @@
+﻿#pragma once
+
+#include "CoreMinimal.h"
+
+class %CLASS_MODULE_API_MACRO%%UNPREFIXED_CLASS_NAME%
+{
+public:
+	%UNPREFIXED_CLASS_NAME%();
+	~%UNPREFIXED_CLASS_NAME%();
+};

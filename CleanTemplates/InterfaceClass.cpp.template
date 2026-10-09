@@ -1,0 +1,4 @@
+﻿%MY_HEADER_INCLUDE_DIRECTIVE%
+%ADDITIONAL_INCLUDE_DIRECTIVES%
+
+// Add default functionality here for any I%UNPREFIXED_CLASS_NAME% functions that are not pure virtual.
