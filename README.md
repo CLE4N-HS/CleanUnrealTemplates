@@ -35,7 +35,7 @@ This program replaces the default .template files installed with those located i
 
 ## Versions
 
-- **CleanUneralTemplates** release version: **1.0**
+- **CleanUnrealTemplates** release version: **1.0**
 - Current supported Unreal version: **Unreal 5.8**
 - Current edited classes:
   - **Actor**
